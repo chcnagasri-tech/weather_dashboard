@@ -1,96 +1,44 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-function saveTasks(){
-localStorage.setItem("tasks", JSON.stringify(tasks));
+body{
+font-family:Arial;
+background:#f2f2f2;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-function renderTasks(filter = "all"){
-
-const taskList = document.getElementById("taskList");
-
-taskList.innerHTML = "";
-
-let filteredTasks = tasks.filter(task => {
-
-if(filter === "active") return !task.completed;
-
-if(filter === "completed") return task.completed;
-
-return true;
-
-});
-
-filteredTasks.forEach((task, index) => {
-
-const li = document.createElement("li");
-
-if(task.completed){
-li.classList.add("completed");
+.container{
+background:white;
+padding:30px;
+border-radius:15px;
+width:350px;
+text-align:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
-li.innerHTML = `
-<span onclick="toggleTask(${index})">
-${task.text}
-</span>
-
-<div>
-<button onclick="toggleTask(${index})">✔</button>
-
-<button onclick="deleteTask(${index})">❌</button>
-</div>
-`;
-
-taskList.appendChild(li);
-
-});
-
+.search-box{
+display:flex;
+gap:10px;
+margin-bottom:20px;
 }
 
-function addTask(){
-
-const taskInput = document.getElementById("taskInput");
-
-const text = taskInput.value.trim();
-
-if(text === "") return;
-
-tasks.push({
-text:text,
-completed:false
-});
-
-saveTasks();
-
-renderTasks();
-
-taskInput.value = "";
-
+input{
+flex:1;
+padding:10px;
 }
 
-function toggleTask(index){
-
-tasks[index].completed = !tasks[index].completed;
-
-saveTasks();
-
-renderTasks();
-
+button{
+padding:10px 15px;
+background:#333;
+color:white;
+border:none;
+cursor:pointer;
+border-radius:5px;
 }
 
-function deleteTask(index){
-
-tasks.splice(index,1);
-
-saveTasks();
-
-renderTasks();
-
+.weather-card{
+background:#eee;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
 }
-
-function filterTasks(filter){
-
-renderTasks(filter);
-
-}
-
-renderTasks();
